@@ -58,7 +58,6 @@
   </head>
   <body>
     <div class="players">
-      <!-- PLAYER 1 -->
       <div class="player player-left">
         <h1>??</h1>
         <div class="control-group">
@@ -146,7 +145,7 @@
           />
         </div>
       </div>
-      <!-- PLAYER 2 (same controls) -->
+
       <div class="player">
         <div class="player player-right">
           <h1>??</h1>
@@ -237,7 +236,7 @@
         </div>
       </div>
     </div>
-    <!-- DJ SOUND EFFECTS PANEL -->
+
     <div class="dj-panel">
       <div class="h1">
         <img src="gf.png" alt="image" />
@@ -262,9 +261,7 @@
           .padStart(2, "0")}`;
       }
 
-      // Creates one independent audio player inside a container
       function initPlayer(container) {
-        // --- DOM elements ---
         const fileInput = container.querySelector(".audioFileInput");
         const fileName = container.querySelector(".fileName");
         const playBtn = container.querySelector(".playBtn");
@@ -285,7 +282,6 @@
         const speedSlider = container.querySelector(".speed");
         const speedValue = container.querySelector(".speedValue");
 
-        // --- Audio state ---
         let audioContext = null;
         let audioBuffer = null;
         let sourceNode = null;
@@ -320,7 +316,6 @@
           }
         }
 
-        // Load file
         fileInput.addEventListener("change", async (e) => {
           const file = e.target.files[0];
           if (!file) return;
@@ -410,7 +405,6 @@
           }
         }
 
-        // UI events
         playBtn.addEventListener("click", () => {
           if (!audioBuffer) return;
           play();
@@ -420,7 +414,6 @@
           stop();
         });
 
-        // Seek
         timeSlider.addEventListener("input", () => {
           if (!audioBuffer) return;
           const pos = parseFloat(timeSlider.value);
@@ -438,35 +431,30 @@
           }
         });
 
-        // Volume
         volumeSlider.addEventListener("input", () => {
           const v = parseFloat(volumeSlider.value);
           volumeValue.textContent = v.toFixed(2);
           if (gainNode) gainNode.gain.value = v;
         });
 
-        // Bass
         bassSlider.addEventListener("input", () => {
           const v = parseFloat(bassSlider.value);
           bassValue.textContent = v.toFixed(0);
           if (bassFilter) bassFilter.gain.value = v;
         });
 
-        // Filter freq
         filterFreqSlider.addEventListener("input", () => {
           const v = parseFloat(filterFreqSlider.value);
           filterFreqValue.textContent = v.toFixed(0);
           if (mainFilter) mainFilter.frequency.value = v;
         });
 
-        // Speed
         speedSlider.addEventListener("input", () => {
           const v = parseFloat(speedSlider.value);
           speedValue.textContent = v.toFixed(2);
           if (sourceNode) sourceNode.playbackRate.value = v;
         });
 
-        // Time update loop
         function updateTime() {
           if (isPlaying && audioBuffer && audioContext) {
             const rate = parseFloat(speedSlider.value) || 1;
@@ -483,7 +471,6 @@
         requestAnimationFrame(updateTime);
       }
 
-      // Initialize both players
       document.querySelectorAll(".player").forEach(initPlayer);
     </script>
   </body>

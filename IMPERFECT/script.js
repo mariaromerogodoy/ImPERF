@@ -6,15 +6,11 @@ const soundEffects = {
   PReSsMe: "sound/5.mp3",
 };
 
-// One shared audio context for FX
 const fxContext = new (window.AudioContext || window.webkitAudioContext)();
 
-// Keep track of state per effect
-// fxState[name] = { buffer, source, isPlaying }
 const fxState = {};
 
 async function loadEffectBuffer(name) {
-  // if already loaded, reuse it
   if (fxState[name] && fxState[name].buffer) return fxState[name].buffer;
 
   const url = soundEffects[name];
@@ -32,7 +28,6 @@ async function loadEffectBuffer(name) {
 async function toggleEffect(name, buttonEl) {
   if (!soundEffects[name]) return;
 
-  // ensure context is running (some browsers need this)
   if (fxContext.state === "suspended") {
     await fxContext.resume();
   }
@@ -44,13 +39,10 @@ async function toggleEffect(name, buttonEl) {
   };
   const state = fxState[name];
 
-  // If it's currently playing → stop it
   if (state.isPlaying && state.source) {
     try {
       state.source.stop();
-    } catch (e) {
-      // ignore
-    }
+    } catch (e) {}
     state.source.disconnect();
     state.source = null;
     state.isPlaying = false;
@@ -58,7 +50,6 @@ async function toggleEffect(name, buttonEl) {
     return;
   }
 
-  // Otherwise, (re)load buffer if needed and start playing
   const buffer = await loadEffectBuffer(name);
   if (!buffer) return;
 
@@ -66,7 +57,6 @@ async function toggleEffect(name, buttonEl) {
   source.buffer = buffer;
   source.connect(fxContext.destination);
 
-  // When it finishes, reset state
   source.onended = () => {
     state.isPlaying = false;
     state.source = null;
@@ -80,7 +70,6 @@ async function toggleEffect(name, buttonEl) {
   source.start(0);
 }
 
-// Wire up the buttons
 document.querySelectorAll(".fx-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     const name = btn.dataset.sound;

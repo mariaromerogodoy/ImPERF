@@ -34,8 +34,6 @@
         box-shadow: 6px 6px 0 #00000046;
       }
 
-      /* error window */
-
       .error-window {
         position: absolute;
         width: 280px;
@@ -157,7 +155,6 @@
 
         document.body.appendChild(win);
 
-        // Random position & slight rotation
         const winWidth = 280;
         const winHeight = 130;
 
@@ -172,16 +169,13 @@
         win.style.top = `${y}px`;
         win.style.transform = `rotate(${rotation}deg)`;
 
-        // Close button behavior
         win.querySelector(".error-close").addEventListener("click", () => {
           win.remove();
         });
 
-        // (Optional) buttons can also remove or do nothing:
         const buttons = win.querySelectorAll(".error-button");
         buttons.forEach((btn) => {
           btn.addEventListener("click", () => {
-            // comment out next line if you want them to do nothing
             //   win.remove();
           });
         });
