@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Critical Error Party</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        height: 100vh;
+        overflow: hidden;
+        /* background: #000; */
+        font-family: "MS Sans Serif", system-ui, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #000;
+      }
+
+      #spawnButton {
+        position: relative;
+        z-index: 1;
+        padding: 10px 18px;
+        border: 1px solid #00000055;
+        background: #ffffff;
+        color: #000000;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 6px 6px 0 #00000046;
+      }
+
+      /* error window */
+
+      .error-window {
+        position: absolute;
+        width: 280px;
+        background: #dcdcdc;
+        border: 2px solid #000;
+        box-shadow: 6px 6px 0 #00000046;
+        font-size: 12px;
+        user-select: none;
+      }
+
+      .error-titlebar {
+        background: #0054e3;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2px 6px;
+        font-weight: bold;
+      }
+
+      .error-titlebar span {
+        pointer-events: none;
+      }
+
+      .error-close {
+        width: 16px;
+        height: 16px;
+        border: 1px solid #fff;
+        background: #c0c0c0;
+        color: #000;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 11px;
+      }
+
+      .error-body {
+        display: flex;
+        padding: 10px;
+        gap: 8px;
+      }
+
+      .error-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #c00;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 20px;
+        flex-shrink: 0;
+      }
+
+      .error-text {
+        font-size: 12px;
+      }
+
+      .error-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 6px;
+        padding: 0 10px 10px;
+      }
+
+      .error-button {
+        min-width: 70px;
+        padding: 3px 6px;
+        background: #c0c0c0;
+        border: 1px solid #000;
+        box-shadow: 1px 1px 0 #fff inset;
+        cursor: pointer;
+        font-size: 11px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <button id="spawnButton">Make me PERFECT:)</button>
+
+    <script>
+      const spawnButton = document.getElementById("spawnButton");
+
+      spawnButton.addEventListener("click", () => {
+        spawnErrorWindow();
+      });
+
+      function spawnErrorWindow() {
+        const win = document.createElement("div");
+        win.className = "error-window";
+
+        const randomCode = Math.floor(Math.random() * 999999999)
+          .toString(16)
+          .toUpperCase();
+
+        win.innerHTML = `
+            <div class="error-titlebar">
+              <span>Error message...</span>
+              <div class="error-close">X</div>
+            </div>
+            <div class="error-body">
+              <div class="error-icon">X</div>
+              <div class="error-text">
+                Critical Error #${randomCode}:101<br/>
+                User wants PERFECTION.
+              </div>
+            </div>
+            <div class="error-buttons">
+              <button class="error-button">Reboot</button>
+             <a href="../IMPERFECT/index.html" style="text-decoration:none;">
+  <button class="error-button">Click Me</button>
+</a>
+            </div>
+          `;
+
+        document.body.appendChild(win);
+
+        // Random position & slight rotation
+        const winWidth = 280;
+        const winHeight = 130;
+
+        const maxX = window.innerWidth - winWidth - 10;
+        const maxY = window.innerHeight - winHeight - 10;
+
+        const x = Math.random() * Math.max(maxX, 0);
+        const y = Math.random() * Math.max(maxY, 0);
+        const rotation = (Math.random() - 0.5) * 20; // -10deg to 10deg
+
+        win.style.left = `${x}px`;
+        win.style.top = `${y}px`;
+        win.style.transform = `rotate(${rotation}deg)`;
+
+        // Close button behavior
+        win.querySelector(".error-close").addEventListener("click", () => {
+          win.remove();
+        });
+
+        // (Optional) buttons can also remove or do nothing:
+        const buttons = win.querySelectorAll(".error-button");
+        buttons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            // comment out next line if you want them to do nothing
+            //   win.remove();
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
