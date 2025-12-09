@@ -8,7 +8,7 @@
       * {
         box-sizing: border-box;
         font-family: "helvetica", sans-serif;
-        background-image: url("../design.png"); /* Replace with your image path */
+        background-image: url("../design.png"); 
       background-repeat: repeat;
       background-size: cover;
       background-position: center;
@@ -21,8 +21,8 @@
         overflow: hidden;
         background: #ffffff;
         background-blend-mode: screen;
-        color: #000;
-        background-image: url("../design.png"); /* Replace with your image path */
+        color: #ffffff;
+        background-image: url("../design.png"); 
       background-repeat: repeat;
       background-size: cover;
       background-position: center;
@@ -37,7 +37,7 @@
         background-size: 32px 32px;
       }
 
-      /* ICON */
+  
       .icon {
         position: absolute;
         top: 10px;
@@ -50,7 +50,7 @@
         cursor: default;
       }
 
-      /* WINDOWS */
+      
       .window {
         position: absolute;
         min-width: 260px;
@@ -71,7 +71,7 @@
         justify-content: space-between;
         /* background: linear-gradient(90deg, #ff85b8, #fffd8a, #8af0ff); */
         padding: 2px 4px;
-        color: #000;
+        color: #cd0000;
         font-size: 11px;
         user-select: none;
         cursor: move;
@@ -90,10 +90,6 @@
         border: 1px solid #000;
         background: repeating-conic-gradient(
           from 0deg,
-          /* #fff 0 10deg,
-          #ff2ddf 10deg 20deg,
-          #fffd8a 20deg 30deg,
-          #8af0ff 30deg 40deg */
         );
       }
 
@@ -118,17 +114,10 @@
 
       .window-body {
         padding: 6px;
-        /* background: repeating-linear-gradient(
-          45deg,
-          rgba(255, 255, 255, 0.95),
-          rgba(255, 255, 255, 0.95) 4px,
-          rgba(255, 240, 255, 0.9) 4px,
-          rgba(255, 240, 255, 0.9) 8px
-        ); */
         font-size: 11px;
       }
 
-      /* CONTROLS WINDOW STUFF */
+     
       .panel {
         border: 1px solid #000;
         background: #fffdf8;
@@ -137,7 +126,7 @@
       }
 
       .panel-title {
-        /* font-weight: bold; */
+      
         font-size: 10px;
         background: #ffffff;
         color: #000000;
@@ -254,9 +243,8 @@
         margin-top: 4px;
       }
 
-      /* BIG CANVAS WINDOW */
+    
       #canvasWindow {
-        /* BIGGER WINDOW NOW */
         top: 80px;
         left: 260px;
         width: 65vw;
@@ -267,7 +255,6 @@
       }
 
       #canvasWindow .window-body {
-        /* fill whole window and remove inner padding */
         flex: 1;
         padding: 0;
         position: relative;
@@ -281,8 +268,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-
-        /* TAKE ALL AVAILABLE SPACE */
         flex: 1;
         width: 100%;
         height: 100%;
@@ -300,7 +285,7 @@
 
       .placeholder {
         position: absolute;
-        color: #000000;
+        color: #ffffff;
         font-size: 11px;
         text-align: center;
         padding: 10px;
@@ -333,7 +318,7 @@
     </div>
     
 
-      <!-- CONTROLS WINDOW -->
+ 
       <div class="window" id="controlsWindow" style="top: 40px; left: 90px">
         <div class="title-bar">
           <div class="title-text">
@@ -473,7 +458,7 @@
         <div class="title-bar">
           <div class="title-text">
             <div class="title-dot"></div>
-            <span>Your Perfect image</span>
+            <span>YOUR PERFECT IMAGE</span>
           </div>
           <div class="title-buttons">
             <button class="title-btn">–</button>
@@ -486,7 +471,7 @@
             <div class="placeholder" id="placeholder">
               Choose your Perfect image<br />
               <b></b><br />
-              to begin perfecting
+              to begin perfectinggg
               <!-- ☆☆☆ -->
             </div>
           </div>
@@ -496,7 +481,6 @@
     </div>
 
     <script>
-      /* ========= DRAGGABLE WINDOWS ========= */
       function makeWindowDraggable(win) {
         const handle = win.querySelector(".title-bar");
         let offsetX = 0,
@@ -524,7 +508,7 @@
 
       document.querySelectorAll(".window").forEach(makeWindowDraggable);
 
-      /* ========= IMAGE LAB LOGIC ========= */
+  
       const fileInput = document.getElementById("fileInput");
       const canvas = document.getElementById("canvas");
       const ctx = canvas.getContext("2d");
