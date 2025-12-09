@@ -74,7 +74,7 @@ body {
 .window-content {
   padding: 8px;
   font-size: 12px;
-  background: #ffffff;
+  background: #c0c0c0;
   flex: 1 1 auto;
   overflow: auto;
   box-shadow: 6px 6px 0 #00000046;
