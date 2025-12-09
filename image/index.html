@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Designed to be Imperfect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: "helvetica", sans-serif;
+      }
+
+      body {
+        margin: 0;
+        height: 100vh;
+        overflow: hidden;
+        background: #ffffff;
+        background-blend-mode: screen;
+        color: #000;
+      }
+
+      .desktop {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+        background-size: 32px 32px;
+      }
+
+      /* ICON */
+      .icon {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 64px;
+        text-align: center;
+        color: #fff;
+        font-size: 11px;
+        text-shadow: 1px 1px 0 #000;
+        cursor: default;
+      }
+
+      /* WINDOWS */
+      .window {
+        position: absolute;
+        min-width: 260px;
+        background: #b80010;
+        border: 2px solid #000;
+        transform: rotate(-10deg);
+        transform-origin: center center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        display: flex;
+        flex-direction: column;
+        z-index: 1;
+        box-shadow: 6px 6px 0 #00000046;
+      }
+
+      .title-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        /* background: linear-gradient(90deg, #ff85b8, #fffd8a, #8af0ff); */
+        padding: 2px 4px;
+        color: #000;
+        font-size: 11px;
+        user-select: none;
+        cursor: move;
+      }
+
+      .title-text {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .title-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: 1px solid #000;
+        background: repeating-conic-gradient(
+          from 0deg,
+          /* #fff 0 10deg,
+          #ff2ddf 10deg 20deg,
+          #fffd8a 20deg 30deg,
+          #8af0ff 30deg 40deg */
+        );
+      }
+
+      .title-buttons {
+        display: flex;
+        gap: 2px;
+      }
+
+      .title-btn {
+        width: 14px;
+        height: 14px;
+        border-radius: 0;
+        border: 1px solid #000;
+        background: #000000;
+        font-size: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        padding: 0;
+      }
+
+      .window-body {
+        padding: 6px;
+        /* background: repeating-linear-gradient(
+          45deg,
+          rgba(255, 255, 255, 0.95),
+          rgba(255, 255, 255, 0.95) 4px,
+          rgba(255, 240, 255, 0.9) 4px,
+          rgba(255, 240, 255, 0.9) 8px
+        ); */
+        font-size: 11px;
+      }
+
+      /* CONTROLS WINDOW STUFF */
+      .panel {
+        border: 1px solid #000;
+        background: #fffdf8;
+        margin-bottom: 6px;
+        padding: 4px;
+      }
+
+      .panel-title {
+        /* font-weight: bold; */
+        font-size: 10px;
+        background: #ffffff;
+        color: #000000;
+        padding: 2px 4px;
+        margin: -4px -4px 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2px;
+      }
+
+      label span:last-child {
+        margin-left: 6px;
+        color: #000000;
+      }
+
+      input[type="file"] {
+        width: 100%;
+        font-size: 11px;
+        border: 1px solid #000;
+        padding: 2px;
+        background: #ffffff;
+      }
+
+      input[type="range"] {
+        width: 100%;
+        -webkit-appearance: none;
+        appearance: none;
+        height: 6px;
+        background: #b80010;
+        border: 1px solid #000;
+      }
+
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 10px;
+        height: 14px;
+        background: #b80010;
+        border: 1px solid #000;
+        cursor: pointer;
+      }
+
+      input[type="range"]::-moz-range-thumb {
+        width: 10px;
+        height: 14px;
+        background: #b80010;
+        border: 1px solid #000;
+        cursor: pointer;
+      }
+
+      .slider-group {
+        margin-bottom: 4px;
+      }
+
+      .toggles {
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+        margin-top: 2px;
+      }
+
+      .toggle {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        padding: 2px 4px;
+        border: 1px solid #000;
+        background: #b80010;
+        cursor: pointer;
+        font-size: 10px;
+      }
+
+      .toggle input {
+        margin: 0;
+      }
+
+      .text-input-row {
+        display: flex;
+        gap: 4px;
+        margin-top: 2px;
+      }
+
+      .text-input-row input[type="text"] {
+        flex: 1;
+        font-size: 11px;
+        border: 1px solid #000;
+        padding: 2px 4px;
+        background: #fff;
+      }
+
+      button {
+        font-size: 11px;
+        padding: 3px 6px;
+        border: 1px solid #000;
+        background: #b80010;
+        cursor: pointer;
+        box-shadow: 2px 2px 0 #000;
+      }
+
+      button.secondary {
+        background: #b80010;
+      }
+
+      .buttons {
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+        margin-top: 4px;
+      }
+
+      /* BIG CANVAS WINDOW */
+      #canvasWindow {
+        /* BIGGER WINDOW NOW */
+        top: 80px;
+        left: 260px;
+        width: 65vw;
+        height: 75vh;
+        transform: rotate(10deg);
+        transform-origin: center center;
+        box-shadow: 6px 6px 0 #00000046;
+      }
+
+      #canvasWindow .window-body {
+        /* fill whole window and remove inner padding */
+        flex: 1;
+        padding: 0;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        display: flex;
+      }
+
+      .canvas-wrapper {
+        border: 1px solid #000;
+        background: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* TAKE ALL AVAILABLE SPACE */
+        flex: 1;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+
+      canvas {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        image-rendering: pixelated;
+        background: #ffffff;
+      }
+
+      .placeholder {
+        position: absolute;
+        color: #000000;
+        font-size: 11px;
+        text-align: center;
+        padding: 10px;
+      }
+
+      .scanlines {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background-size: 100% 2px;
+        mix-blend-mode: soft-light;
+        opacity: 0.5;
+      }
+
+      @media (max-width: 768px) {
+        .window {
+          transform: scale(0.9);
+          transform-origin: top left;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="desktop">
+      <div class="icon">
+        <a href="../todo/index.html" style="text-decoration:none; color:inherit;">
+          <span>home</span>
+        </a>
+      </div>
+    </div>
+    
+
+      <!-- CONTROLS WINDOW -->
+      <div class="window" id="controlsWindow" style="top: 40px; left: 90px">
+        <div class="title-bar">
+          <div class="title-text">
+            <div class="title-dot"></div>
+            <span>MAKE ME A PERFECT IMAGE</span>
+          </div>
+          <div class="title-buttons">
+            <button class="title-btn">?</button>
+            <button class="title-btn">×</button>
+          </div>
+        </div>
+        <div class="window-body">
+          <div class="panel">
+            <div class="panel-title">Import file</div>
+            <input type="file" id="fileInput" accept="image/*" />
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Stretch ME</div>
+            <div class="slider-group">
+              <label>
+                Width (%)
+                <span id="widthLabel">100</span>
+              </label>
+              <input
+                type="range"
+                id="widthScale"
+                min="25"
+                max="250"
+                value="100"
+              />
+            </div>
+            <div class="slider-group">
+              <label>
+                Height (%)
+                <span id="heightLabel">100</span>
+              </label>
+              <input
+                type="range"
+                id="heightScale"
+                min="25"
+                max="250"
+                value="100"
+              />
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Pixalate Me</div>
+            <div class="slider-group">
+              <label>
+                Pixel size
+                <span id="pixelLabel">4</span>
+              </label>
+              <input type="range" id="pixelSize" min="1" max="60" value="4" />
+            </div>
+            <small>Make me Perfect</small>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">FIX ME</div>
+
+            <div class="slider-group">
+              <label>
+                Brightness
+                <span id="brightnessLabel">100%</span>
+              </label>
+              <input
+                type="range"
+                id="brightness"
+                min="50"
+                max="150"
+                value="100"
+              />
+            </div>
+
+            <div class="slider-group">
+              <label>
+                Contrast
+                <span id="contrastLabel">100%</span>
+              </label>
+              <input
+                type="range"
+                id="contrast"
+                min="50"
+                max="150"
+                value="100"
+              />
+            </div>
+
+            <div class="slider-group">
+              <label>
+                Saturation
+                <span id="saturationLabel">100%</span>
+              </label>
+              <input
+                type="range"
+                id="saturation"
+                min="0"
+                max="200"
+                value="100"
+              />
+            </div>
+
+            <div class="toggles">
+              <label class="toggle">
+                <input type="checkbox" id="grayscale" />
+                <span>Grayscale</span>
+              </label>
+              <label class="toggle">
+                <input type="checkbox" id="flipX" />
+                <span>FLIP ME</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Write on ME</div>
+            <div class="text-input-row">
+              <input
+                type="text"
+                id="overlayText"
+                placeholder="WHY AM I SO PERFECT..."
+              />
+              <button id="addTextBtn">DONE</button>
+            </div>
+            <div class="buttons">
+              <button id="downloadBtn">SAVE .PNG</button>
+              <button class="secondary" id="resetBtn">RESET ME</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BIG CANVAS WINDOW -->
+      <div class="window" id="canvasWindow">
+        <div class="title-bar">
+          <div class="title-text">
+            <div class="title-dot"></div>
+            <span>Your Perfect image</span>
+          </div>
+          <div class="title-buttons">
+            <button class="title-btn">–</button>
+            <button class="title-btn">□</button>
+          </div>
+        </div>
+        <div class="window-body">
+          <div class="canvas-wrapper">
+            <canvas id="canvas"></canvas>
+            <div class="placeholder" id="placeholder">
+              Choose your Perfect image<br />
+              <b></b><br />
+              to begin perfecting
+              <!-- ☆☆☆ -->
+            </div>
+          </div>
+          <div class="scanlines"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /* ========= DRAGGABLE WINDOWS ========= */
+      function makeWindowDraggable(win) {
+        const handle = win.querySelector(".title-bar");
+        let offsetX = 0,
+          offsetY = 0;
+        let isDown = false;
+
+        handle.addEventListener("mousedown", (e) => {
+          isDown = true;
+          const rect = win.getBoundingClientRect();
+          offsetX = e.clientX - rect.left;
+          offsetY = e.clientY - rect.top;
+          win.style.zIndex = parseInt(win.style.zIndex || "1") + 1;
+        });
+
+        window.addEventListener("mousemove", (e) => {
+          if (!isDown) return;
+          win.style.left = e.clientX - offsetX + "px";
+          win.style.top = e.clientY - offsetY + "px";
+        });
+
+        window.addEventListener("mouseup", () => {
+          isDown = false;
+        });
+      }
+
+      document.querySelectorAll(".window").forEach(makeWindowDraggable);
+
+      /* ========= IMAGE LAB LOGIC ========= */
+      const fileInput = document.getElementById("fileInput");
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+
+      const widthScale = document.getElementById("widthScale");
+      const heightScale = document.getElementById("heightScale");
+      const pixelSize = document.getElementById("pixelSize");
+      const brightness = document.getElementById("brightness");
+      const contrast = document.getElementById("contrast");
+      const saturation = document.getElementById("saturation");
+      const grayscale = document.getElementById("grayscale");
+      const flipX = document.getElementById("flipX");
+
+      const widthLabel = document.getElementById("widthLabel");
+      const heightLabel = document.getElementById("heightLabel");
+      const pixelLabel = document.getElementById("pixelLabel");
+      const brightnessLabel = document.getElementById("brightnessLabel");
+      const contrastLabel = document.getElementById("contrastLabel");
+      const saturationLabel = document.getElementById("saturationLabel");
+
+      const overlayTextInput = document.getElementById("overlayText");
+      const addTextBtn = document.getElementById("addTextBtn");
+      const downloadBtn = document.getElementById("downloadBtn");
+      const resetBtn = document.getElementById("resetBtn");
+      const placeholder = document.getElementById("placeholder");
+
+      let originalImage = null;
+      let originalWidth = 0;
+      let originalHeight = 0;
+      let imageLoaded = false;
+
+      function updateLabels() {
+        widthLabel.textContent = widthScale.value;
+        heightLabel.textContent = heightScale.value;
+        pixelLabel.textContent = pixelSize.value;
+        brightnessLabel.textContent = brightness.value + "%";
+        contrastLabel.textContent = contrast.value + "%";
+        saturationLabel.textContent = saturation.value + "%";
+      }
+
+      function getFilterString() {
+        const b = brightness.value / 100;
+        const c = contrast.value / 100;
+        const s = saturation.value / 100;
+
+        const filters = [
+          `brightness(${b})`,
+          `contrast(${c})`,
+          `saturate(${s})`,
+        ];
+        if (grayscale.checked) filters.push("grayscale(1)");
+
+        return filters.join(" ");
+      }
+
+      function render() {
+        if (!imageLoaded || !originalImage) return;
+
+        const wScale = widthScale.value / 100;
+        const hScale = heightScale.value / 100;
+
+        const targetWidth = Math.max(1, Math.round(originalWidth * wScale));
+        const targetHeight = Math.max(1, Math.round(originalHeight * hScale));
+
+        canvas.width = targetWidth;
+        canvas.height = targetHeight;
+
+        const p = parseInt(pixelSize.value, 10);
+        const filterStr = getFilterString();
+
+        ctx.save();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (p <= 1) {
+          ctx.filter = filterStr;
+          ctx.save();
+          if (flipX.checked) {
+            ctx.translate(canvas.width, 0);
+            ctx.scale(-1, 1);
+          }
+          ctx.drawImage(originalImage, 0, 0, canvas.width, canvas.height);
+          ctx.restore();
+        } else {
+          const tempCanvas = document.createElement("canvas");
+          const tempCtx = tempCanvas.getContext("2d");
+
+          const smallW = Math.max(1, Math.floor(targetWidth / p));
+          const smallH = Math.max(1, Math.floor(targetHeight / p));
+
+          tempCanvas.width = smallW;
+          tempCanvas.height = smallH;
+          tempCtx.imageSmoothingEnabled = true;
+          tempCtx.filter = filterStr;
+
+          tempCtx.save();
+          if (flipX.checked) {
+            tempCtx.translate(smallW, 0);
+            tempCtx.scale(-1, 1);
+          }
+          tempCtx.drawImage(originalImage, 0, 0, smallW, smallH);
+          tempCtx.restore();
+
+          ctx.imageSmoothingEnabled = false;
+          ctx.drawImage(
+            tempCanvas,
+            0,
+            0,
+            smallW,
+            smallH,
+            0,
+            0,
+            targetWidth,
+            targetHeight
+          );
+        }
+
+        ctx.restore();
+        placeholder.style.display = "none";
+      }
+
+      fileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const img = new Image();
+          img.onload = () => {
+            originalImage = img;
+            originalWidth = img.naturalWidth;
+            originalHeight = img.naturalHeight;
+            imageLoaded = true;
+            resetControls(false);
+            render();
+          };
+          img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+
+      [
+        widthScale,
+        heightScale,
+        pixelSize,
+        brightness,
+        contrast,
+        saturation,
+      ].forEach((el) => {
+        el.addEventListener("input", () => {
+          updateLabels();
+          render();
+        });
+      });
+
+      [grayscale, flipX].forEach((el) => {
+        el.addEventListener("change", render);
+      });
+
+      addTextBtn.addEventListener("click", () => {
+        if (!imageLoaded) return;
+        const text = overlayTextInput.value.trim();
+        if (!text) return;
+
+        ctx.save();
+        const fontSize = Math.max(14, Math.round(canvas.width / 18));
+        ctx.font = `bold ${fontSize}px "MS Sans Serif", system-ui`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        ctx.fillStyle = "rgba(0,0,0,0.7)";
+        ctx.fillText(text, canvas.width / 2 + 2, canvas.height / 2 + 2);
+
+        const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+        gradient.addColorStop(0, "#0000");
+        gradient.addColorStop(0.5, "#0000");
+        gradient.addColorStop(1, "#0000");
+        ctx.fillStyle = gradient;
+        ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+        ctx.restore();
+      });
+
+      downloadBtn.addEventListener("click", () => {
+        if (!imageLoaded) return;
+        const link = document.createElement("a");
+        link.download = "webcore-image.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+
+      function resetControls(alsoImage = true) {
+        widthScale.value = 100;
+        heightScale.value = 100;
+        pixelSize.value = 4;
+        brightness.value = 100;
+        contrast.value = 100;
+        saturation.value = 100;
+        grayscale.checked = false;
+        flipX.checked = false;
+        overlayTextInput.value = "";
+        updateLabels();
+
+        if (alsoImage) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          imageLoaded = false;
+          originalImage = null;
+          placeholder.style.display = "block";
+        }
+      }
+
+      resetBtn.addEventListener("click", () => {
+        resetControls(false);
+        render();
+      });
+
+      updateLabels();
+    </script>
+  </body>
+</html>

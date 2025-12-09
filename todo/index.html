@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Home</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Video window -->
+    <div
+      class="window1"
+      style="left: 140px; top: 60px; width: 320px; height: 230px"
+    >
+      <div class="title-bar">
+        <div class="title-bar-left">
+          <div class="title-buttons">
+            <div class="btn-dot btn-red"></div>
+          </div>
+          <span class="title-text">Designed to be Imperfect</span>
+        </div>
+      </div>
+      <div class="window-content">
+        <div class="image-slot">
+          <img src="../design.png" alt="img" />
+          <span>Design your PERFECT image</span>
+        </div>
+        <a href="../image/index.html" style="text-decoration: none">
+          <button class="error-button">try me</button>
+        </a>
+        <p>
+          In this you will explore the form of disecting and extracting an image
+          to create a new image.
+        </p>
+        <!-- <div class="controls">
+          <div class="ctrl-btn">⏮</div>
+          <div class="ctrl-btn">▶</div>
+          <div class="ctrl-btn">⏭</div>
+          <div class="ctrl-btn">⏹</div>
+        </div> -->
+      </div>
+      <div class="resize-handle"></div>
+    </div>
+
+    <!-- Text editor window -->
+    <div
+      class="window1"
+      style="left: 420px; top: 40px; width: 360px; height: 240px"
+    >
+      <div class="title-bar">
+        <div class="title-bar-left">
+          <div class="title-buttons">
+            <div class="btn-dot btn-red"></div>
+          </div>
+          <span class="title-text">Wabi Sabi</span>
+        </div>
+      </div>
+      <div class="window-content" style="background: #ffffff">
+        <div class="image-slot">
+          <img src="kiss.JPG" alt="img" />
+        </div>
+      </div>
+      <div class="resize-handle"></div>
+    </div>
+
+    <!-- Shop window -->
+    <div
+      class="window"
+      style="left: 360px; top: 260px; width: 340px; height: 260px"
+    >
+      <div class="title-bar">
+        <div class="title-bar-left">
+          <div class="title-buttons">
+            <div class="btn-dot btn-red"></div>
+          </div>
+          <span class="title-text">Music as an Imperfection</span>
+        </div>
+      </div>
+      <div class="window-content" style="background: #ffffff">
+        <div class="shop-item">
+          <img src="../music1.png" alt="Shirt" />
+          <div class="shop-info">
+            create the perfect song<br />
+            $27.99 – out of stock<br />
+            <a href="../IMPERFECT/perf.html" style="text-decoration: none">
+              <button class="error-button">try me</button>
+            </a>
+          </div>
+        </div>
+
+        <div class="shop-item">
+          <img src="../ma.jpeg" alt="Cap" />
+          <div class="shop-info">
+            Create the perfect beat<br />
+            $19.99 – in stock<br />
+            <a href="../IMPERFECT/perf.html" style="text-decoration: none">
+              <button class="error-button">try me</button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="resize-handle"></div>
+    </div>
+
+    <!-- To-Do window with cookies -->
+    <div
+      class="window"
+      id="todo-window"
+      style="left: 60px; top: 260px; width: 260px; height: 260px"
+    >
+      <div class="title-bar">
+        <div class="title-bar-left">
+          <div class="title-buttons">
+            <div class="btn-dot btn-red"></div>
+          </div>
+          <span class="title-text">Where does Perfection come from</span>
+        </div>
+      </div>
+      <div class="window-content todo-container">
+        <input
+          type="text"
+          id="todo-input"
+          placeholder="Type a to-do and press Add"
+        />
+        <button id="todo-add">Add To-Do</button>
+
+        <ul id="todo-list"></ul>
+
+        <p style="font-size: 10px; margin-top: 6px">
+          What's on your to do?<br />
+          Check when to do is done &amp; get it over with.
+        </p>
+      </div>
+      <div class="resize-handle"></div>
+    </div>
+
+    <script>
+      /* ========== DRAGGABLE WINDOWS ========== */
+      let topZ = 10;
+
+      function makeWindowDraggable(win) {
+        const header = win.querySelector(".title-bar");
+        if (!header) return;
+
+        let offsetX = 0;
+        let offsetY = 0;
+        let dragging = false;
+
+        header.addEventListener("mousedown", (e) => {
+          e.preventDefault();
+          dragging = true;
+          topZ += 1;
+          win.style.zIndex = topZ;
+
+          const rect = win.getBoundingClientRect();
+          offsetX = e.clientX - rect.left;
+          offsetY = e.clientY - rect.top;
+
+          document.addEventListener("mousemove", onMouseMove);
+          document.addEventListener("mouseup", onMouseUp);
+        });
+
+        function onMouseMove(e) {
+          if (!dragging) return;
+          e.preventDefault();
+
+          let x = e.clientX - offsetX;
+          let y = e.clientY - offsetY;
+
+          win.style.left = x + "px";
+          win.style.top = y + "px";
+        }
+
+        function onMouseUp() {
+          dragging = false;
+          document.removeEventListener("mousemove", onMouseMove);
+          document.removeEventListener("mouseup", onMouseUp);
+        }
+      }
+
+      /* ========== RESIZABLE WINDOWS ========== */
+      function makeWindowResizable(win) {
+        const handle = win.querySelector(".resize-handle");
+        if (!handle) return;
+
+        let isResizing = false;
+        let startX, startY, startWidth, startHeight;
+
+        handle.addEventListener("mousedown", (e) => {
+          e.preventDefault();
+          e.stopPropagation(); // don’t trigger drag
+
+          isResizing = true;
+          topZ += 1;
+          win.style.zIndex = topZ;
+
+          const rect = win.getBoundingClientRect();
+          startX = e.clientX;
+          startY = e.clientY;
+          startWidth = rect.width;
+          startHeight = rect.height;
+
+          document.addEventListener("mousemove", resize);
+          document.addEventListener("mouseup", stopResize);
+        });
+
+        function resize(e) {
+          if (!isResizing) return;
+
+          const newWidth = startWidth + (e.clientX - startX);
+          const newHeight = startHeight + (e.clientY - startY);
+
+          win.style.width = Math.max(180, newWidth) + "px";
+          win.style.height = Math.max(140, newHeight) + "px";
+        }
+
+        function stopResize() {
+          isResizing = false;
+          document.removeEventListener("mousemove", resize);
+          document.removeEventListener("mouseup", stopResize);
+        }
+      }
+
+      // apply drag & resize to all windows
+      document.querySelectorAll(".window").forEach((win) => {
+        makeWindowDraggable(win);
+        makeWindowResizable(win);
+      });
+      document.querySelectorAll(".window1").forEach((win) => {
+        makeWindowDraggable(win);
+        makeWindowResizable(win);
+      });
+
+      /* ========== COOKIE HELPERS ========== */
+      function setCookie(name, value, days) {
+        const d = new Date();
+        d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+        const expires = "expires=" + d.toUTCString();
+        document.cookie =
+          name + "=" + encodeURIComponent(value) + ";" + expires + ";path=/";
+      }
+
+      function getCookie(name) {
+        const cname = name + "=";
+        const decoded = decodeURIComponent(document.cookie);
+        const ca = decoded.split(";");
+        for (let c of ca) {
+          while (c.charAt(0) === " ") c = c.substring(1);
+          if (c.indexOf(cname) === 0) {
+            return c.substring(cname.length, c.length);
+          }
+        }
+        return "";
+      }
+
+      /* ========== TO-DO LOGIC ========== */
+      const TODO_COOKIE = "retroTodos";
+
+      const todoInput = document.getElementById("todo-input");
+      const todoAdd = document.getElementById("todo-add");
+      const todoListEl = document.getElementById("todo-list");
+
+      let todos = [];
+
+      function loadTodos() {
+        const raw = getCookie(TODO_COOKIE);
+        if (!raw) {
+          todos = [];
+          return;
+        }
+        try {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) {
+            todos = parsed;
+          } else {
+            todos = [];
+          }
+        } catch (e) {
+          todos = [];
+        }
+      }
+
+      function saveTodos() {
+        setCookie(TODO_COOKIE, JSON.stringify(todos), 365);
+      }
+
+      function renderTodos() {
+        todoListEl.innerHTML = "";
+        todos.forEach((text, index) => {
+          const li = document.createElement("li");
+
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.addEventListener("change", () => {
+            // remove item when checked
+            todos.splice(index, 1);
+            saveTodos();
+            renderTodos();
+          });
+
+          const span = document.createElement("span");
+          span.textContent = text;
+
+          li.appendChild(checkbox);
+          li.appendChild(span);
+          todoListEl.appendChild(li);
+        });
+      }
+
+      function addTodo() {
+        const text = todoInput.value.trim();
+        if (!text) return;
+        todos.push(text);
+        todoInput.value = "";
+        saveTodos();
+        renderTodos();
+      }
+
+      todoAdd.addEventListener("click", addTodo);
+      todoInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") addTodo();
+      });
+
+      // initial load
+      loadTodos();
+      renderTodos();
+    </script>
+  </body>
+</html>
