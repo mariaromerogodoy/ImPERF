@@ -9,6 +9,11 @@ body {
   overflow: hidden;
   background-blend-mode: screen;
   color: #000;
+  background-image: url("../design.png"); /* Replace with your image path */
+  background-repeat: repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 .desktop {

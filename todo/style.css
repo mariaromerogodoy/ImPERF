@@ -9,6 +9,11 @@ body {
   background-size: 32px 32px;
   color: #000;
   overflow: hidden;
+  background-image: url("back.png"); /* Replace with your image path */
+  background-repeat: repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 .window,
@@ -74,7 +79,7 @@ body {
 .window-content {
   padding: 8px;
   font-size: 12px;
-  background: #c0c0c0;
+  background: #ffffff;
   flex: 1 1 auto;
   overflow: auto;
   box-shadow: 6px 6px 0 #00000046;
