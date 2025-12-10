@@ -9,7 +9,7 @@ body {
   background-size: 32px 32px;
   color: #000;
   overflow: hidden;
-  background-image: url("back.png"); /* Replace with your image path */
+  background-image: url("back.png");
   background-repeat: repeat;
   background-size: cover;
   background-position: center;
@@ -192,7 +192,6 @@ body {
   cursor: pointer;
 }
 
-/* Resize handle bottom-right */
 .resize-handle {
   position: absolute;
   width: 12px;

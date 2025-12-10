@@ -43,7 +43,6 @@ input[type="range"] {
   width: 18rem;
 }
 
-/* Removes default focus */
 input[type="range"]:focus {
   outline: none;
   border: 1px solid #000;

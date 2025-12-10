@@ -163,7 +163,7 @@
 
         const x = Math.random() * Math.max(maxX, 0);
         const y = Math.random() * Math.max(maxY, 0);
-        const rotation = (Math.random() - 0.5) * 20; // -10deg to 10deg
+        const rotation = (Math.random() - 0.5) * 20;
 
         win.style.left = `${x}px`;
         win.style.top = `${y}px`;
@@ -175,9 +175,7 @@
 
         const buttons = win.querySelectorAll(".error-button");
         buttons.forEach((btn) => {
-          btn.addEventListener("click", () => {
-            //   win.remove();
-          });
+          btn.addEventListener("click", () => {});
         });
       }
     </script>

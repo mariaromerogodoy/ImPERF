@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- Video window -->
     <div
       class="window1"
       style="left: 140px; top: 60px; width: 320px; height: 230px"
@@ -41,7 +40,6 @@
       <div class="resize-handle"></div>
     </div>
 
-    <!-- Text editor window -->
     <div
       class="window1"
       style="left: 420px; top: 40px; width: 360px; height: 240px"
@@ -62,7 +60,6 @@
       <div class="resize-handle"></div>
     </div>
 
-    <!-- Shop window -->
     <div
       class="window"
       style="left: 360px; top: 260px; width: 340px; height: 260px"
@@ -101,7 +98,6 @@
       <div class="resize-handle"></div>
     </div>
 
-    <!-- To-Do window with cookies -->
     <div
       class="window"
       id="todo-window"
@@ -134,7 +130,6 @@
     </div>
 
     <script>
-      /* ========== DRAGGABLE WINDOWS ========== */
       let topZ = 10;
 
       function makeWindowDraggable(win) {
@@ -177,7 +172,6 @@
         }
       }
 
-      /* ========== RESIZABLE WINDOWS ========== */
       function makeWindowResizable(win) {
         const handle = win.querySelector(".resize-handle");
         if (!handle) return;
@@ -187,7 +181,7 @@
 
         handle.addEventListener("mousedown", (e) => {
           e.preventDefault();
-          e.stopPropagation(); // don’t trigger drag
+          e.stopPropagation();
 
           isResizing = true;
           topZ += 1;
@@ -220,7 +214,6 @@
         }
       }
 
-      // apply drag & resize to all windows
       document.querySelectorAll(".window").forEach((win) => {
         makeWindowDraggable(win);
         makeWindowResizable(win);
@@ -230,7 +223,6 @@
         makeWindowResizable(win);
       });
 
-      /* ========== COOKIE HELPERS ========== */
       function setCookie(name, value, days) {
         const d = new Date();
         d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
@@ -252,7 +244,6 @@
         return "";
       }
 
-      /* ========== TO-DO LOGIC ========== */
       const TODO_COOKIE = "retroTodos";
 
       const todoInput = document.getElementById("todo-input");
@@ -320,7 +311,6 @@
         if (e.key === "Enter") addTodo();
       });
 
-      // initial load
       loadTodos();
       renderTodos();
     </script>
